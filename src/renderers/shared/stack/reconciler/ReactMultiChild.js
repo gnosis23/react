@@ -167,7 +167,7 @@ if (__DEV__) {
 
 /**
  * ReactMultiChild are capable of reconciling multiple children.
- *
+ * 下面的函数是通过 Mixin 的方式加入到 ReactDOMComponent 里面去的
  * @class ReactMultiChild
  * @internal
  */
@@ -265,6 +265,9 @@ var ReactMultiChild = {
 
       var mountImages = [];
       var index = 0;
+      // 这里的 name 指的是什么 ？
+      // __reconcilerInstantiateChildren => ReactChildReconciler.instantiateChildren =>
+      //   traverseAllChildren
       for (var name in children) {
         if (children.hasOwnProperty(name)) {
           var child = children[name];
