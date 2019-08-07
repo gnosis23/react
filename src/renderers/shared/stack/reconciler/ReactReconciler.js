@@ -51,6 +51,7 @@ var ReactReconciler = {
         );
       }
     }
+    // II: 调用对应的 mountComponent 方法
     var markup = internalInstance.mountComponent(
       transaction,
       hostParent,

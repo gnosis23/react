@@ -186,6 +186,15 @@ var ReactCompositeComponent = {
     this._hostParent = hostParent;
     this._hostContainerInfo = hostContainerInfo;
 
+    // ==== INTERNAL VARIABLES ====
+    // this._currentElement
+    //    ReactElement { type, props }
+    // this._instance
+    //    new this._currentElement.type
+    // this._renderedNodeType
+    //    HOST | COMPOSITE
+    // this._renderedComponent
+    //    ReactDOMComponent | ReactCompositeComponent
     var publicProps = this._currentElement.props;
     var publicContext = this._processContext(context);
 
@@ -503,10 +512,13 @@ var ReactCompositeComponent = {
     }
 
     // If not a stateless component, we now render
+    // II: call this._instance.render()
+    //     got ReactElement
     if (renderedElement === undefined) {
       renderedElement = this._renderValidatedComponent();
     }
 
+    // II: create ReactDOMComponent here
     var nodeType = ReactNodeTypes.getType(renderedElement);
     this._renderedNodeType = nodeType;
     var child = this._instantiateReactComponent(

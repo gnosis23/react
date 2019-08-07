@@ -1,0 +1,41 @@
+call stack 1:
+
+ReactDOM.render(
+  <h1 style={{color: "blue"}}>hello world</h1>,
+  document.getElementById("root")
+);
+
+ReactDOM.render
+|= ReactMount.render(nextElement, container, callback)
+|= ReactMount._renderSubtreeIntoContainer(
+     parentComponent, // null
+     nextElement,     // ReactElement
+     container,       // root
+     callback         // undefined
+    )
+    |-instantiateReactComponent(
+       node,
+       shouldHaveDebugID
+      )
+      |-ReactCompositeComponentWrapper(
+        element
+      );
+      |=ReactCompositeComponent.construct(element)
+
+
+call stack 2:
+
+|=ReactMount.render(nextElement, container, callback)     ___
+|=ReactMount._renderSubtreeIntoContainer()                 |
+  |-ReactMount._renderNewRootComponent()                   |
+    |-instantiateReactComponent()                          |
+    |~batchedMountComponentIntoNode()                 upper half
+      |~mountComponentIntoNode()                  (platform agnostic)
+        |-ReactReconciler.mountComponent()                 |
+          |-ReactCompositeComponent.mountComponent()       |
+          |-ReactCompositeComponent.performInitialMount    |
+            |-instantiateReactComponent()                 _|_
+            |-ReactDOMComponent.mountComponent()      lower half
+        |-_mountImageIntoNode                     (HTML DOM specific)
+                                                          _|_
+
