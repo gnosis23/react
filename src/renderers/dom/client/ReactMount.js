@@ -467,6 +467,7 @@ var ReactMount = {
         'for your app.',
     );
 
+    // I: 只有这行有些用
     var nextWrappedElement = React.createElement(TopLevelWrapper, {
       child: nextElement,
     });

@@ -118,10 +118,10 @@ var ReactElement = function(type, key, ref, self, source, owner, props) {
     $$typeof: REACT_ELEMENT_TYPE,
 
     // Built-in properties that belong on the element
-    type: type,
-    key: key,
-    ref: ref,
-    props: props,
+    type: type,   // example 'h1'
+    key: key,     // TODO
+    ref: ref,     // TODO
+    props: props, // example { children: 'hello world', style: {"color": "blue"} }
 
     // Record the component responsible for creating this element.
     _owner: owner,
@@ -177,6 +177,13 @@ var ReactElement = function(type, key, ref, self, source, owner, props) {
 /**
  * Create and return a new ReactElement of the given type.
  * See https://facebook.github.io/react/docs/top-level-api.html#react.createelement
+ *
+ * I: data {
+ *   type: string (HTML tag) or Class/Function
+ *   props: Object
+ *   child: ReactElement
+ * }
+ *
  */
 ReactElement.createElement = function(type, config, children) {
   var propName;
@@ -200,6 +207,7 @@ ReactElement.createElement = function(type, config, children) {
     self = config.__self === undefined ? null : config.__self;
     source = config.__source === undefined ? null : config.__source;
     // Remaining properties are added to a new props object
+    // 有几个特殊属性不会被加入 props，key、ref、__self、__source
     for (propName in config) {
       if (
         hasOwnProperty.call(config, propName) &&
@@ -214,10 +222,12 @@ ReactElement.createElement = function(type, config, children) {
   // the newly allocated props object.
   var childrenLength = arguments.length - 2;
   if (childrenLength === 1) {
+    // children 可以是 object | function | ...
     props.children = children;
   } else if (childrenLength > 1) {
     var childArray = Array(childrenLength);
     for (var i = 0; i < childrenLength; i++) {
+      // children 可以是 Array
       childArray[i] = arguments[i + 2];
     }
     if (__DEV__) {

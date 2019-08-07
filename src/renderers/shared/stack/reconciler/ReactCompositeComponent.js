@@ -126,6 +126,7 @@ var nextMountID = 1;
 var ReactCompositeComponent = {
   /**
    * Base constructor for all composite component.
+   * I: gogo
    *
    * @param {ReactElement} element
    * @final

@@ -25,6 +25,27 @@ var warning = require('warning');
 
 ReactDefaultInjection.inject();
 
+/**
+ * I: call stack
+ *
+ * ReactDOM.render
+ * |= ReactMount.render(nextElement, container, callback)
+ * |= ReactMount._renderSubtreeIntoContainer(
+ *      parentComponent, // null
+ *      nextElement,     // ReactElement
+ *      container,       // root
+ *      callback         // undefined
+ *    )
+ *    |-instantiateReactComponent(
+ *        node,
+ *        shouldHaveDebugID
+ *      )
+ *      |-ReactCompositeComponentWrapper(
+ *        element
+ *      );
+ *      |=ReactCompositeComponent.construct(element)
+ *
+ */
 var ReactDOM = {
   findDOMNode: findDOMNode,
   render: ReactMount.render,
